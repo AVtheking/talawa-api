@@ -1,7 +1,7 @@
 import type { Model, PopulatedDoc, Types } from "mongoose";
 
 import { Schema, model, models } from "mongoose";
-import type { InterfaceFundCampaign } from "./FundCampaign";
+import type { InterfaceFundraisingCampaign } from "./FundraisingCampaign";
 /**
  * This is an interface representing a document for fund in the database(MongoDB).
  */
@@ -13,7 +13,7 @@ export interface InterfaceFund {
   taxDeductible: boolean;
   isDefault: boolean;
   isArchived: boolean;
-  campaign: PopulatedDoc<InterfaceFundCampaign & Document>[];
+  campaigns: PopulatedDoc<InterfaceFundraisingCampaign & Document>[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -26,7 +26,7 @@ export interface InterfaceFund {
  * @param taxDeductible - Whether the fund is tax deductible
  * @param isDefault - Whether the fund is default
  * @param isArchived - Whether the fund is archived
- * @param campaign - Campaigns associated with the fund
+ * @param campaigns - Campaigns associated with the fund
  * @param createdAt - Timestamp of creation
  * @param updatedAt - Timestamp of updation
  *
@@ -57,7 +57,7 @@ const fundSchema = new Schema(
       type: Boolean,
       required: true,
     },
-    campaign: [
+    campaigns: [
       {
         type: Schema.Types.ObjectId,
         ref: "FundCampaign",

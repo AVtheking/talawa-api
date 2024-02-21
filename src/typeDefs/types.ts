@@ -223,19 +223,19 @@ export const types = gql`
 
   type Fund {
     _id: ID!
-    organizationId: ID!
+    organizationId: Organization!
     name: String!
     refrenceNumber: String
     taxDeductible: Boolean!
     isDefault: Boolean!
     isArchived: Boolean!
-    campaign: [FundraisingCampaign]!
+    campaigns: [FundraisingCampaign]!
     createdAt: DateTime!
     updatedAt: DateTime!
   }
   type FundraisingCampaign {
     _id: ID!
-    fund: Fund!
+    fundId: Fund!
     name: String!
     startDate: Date!
     endDate: Date!
