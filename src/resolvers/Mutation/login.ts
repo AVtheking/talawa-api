@@ -5,11 +5,7 @@ import {
   USER_NOT_FOUND_ERROR,
 } from "../../constants";
 import { errors, requestContext } from "../../libraries";
-import type {
-  InterfaceEvent,
-  InterfaceOrganization,
-  InterfaceUser,
-} from "../../models";
+import type { InterfaceAppUserProfile, InterfaceUser } from "../../models";
 import { AppUserProfile, User } from "../../models";
 import type { MutationResolvers } from "../../types/generatedGraphQLTypes";
 import {
@@ -135,22 +131,17 @@ export const login: MutationResolvers["login"] = async (_parent, args) => {
     .populate("membershipRequests")
     .populate("organizationsBlockedBy")
     .lean();
+  appUserProfile = await AppUserProfile.findOne({
+    userId: user?._id.toString(),
+  })
+    .populate("createdOrganizations")
+    .populate("createdEvents")
+    .populate("eventAdmin")
+    .populate("adminFor");
 
   return {
     user: user as InterfaceUser,
-    appUserProfile: {
-      _id: appUserProfile._id.toString(),
-      userId: appUserProfile.userId as InterfaceUser,
-      adminFor: appUserProfile.adminFor as InterfaceOrganization[],
-      appLanguageCode: appUserProfile.appLanguageCode,
-      isSuperAdmin: appUserProfile.isSuperAdmin,
-      pluginCreationAllowed: appUserProfile.pluginCreationAllowed,
-      tokenVersion: appUserProfile.tokenVersion,
-      eventAdmin: appUserProfile.eventAdmin as InterfaceEvent[],
-      createdEvents: appUserProfile.createdEvents as InterfaceEvent[],
-      createdOrganizations:
-        appUserProfile.createdOrganizations as InterfaceOrganization[],
-    },
+    appUserProfile: appUserProfile as InterfaceAppUserProfile,
     accessToken,
     refreshToken,
   };

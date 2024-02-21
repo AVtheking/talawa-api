@@ -4,12 +4,7 @@ import {
   USER_NOT_FOUND_ERROR,
 } from "../../constants";
 import { errors, requestContext } from "../../libraries";
-import type {
-  InterfaceAppUserProfile,
-  InterfaceEvent,
-  InterfaceOrganization,
-  InterfaceUser,
-} from "../../models";
+import type { InterfaceAppUserProfile, InterfaceUser } from "../../models";
 import {
   ActionItem,
   ActionItemCategory,
@@ -182,26 +177,17 @@ export const removeOrganization: MutationResolvers["removeOrganization"] =
     })
       .select(["-password"])
       .lean();
-    const updatedAppUserProfile: InterfaceAppUserProfile =
-      await AppUserProfile.findOne({
-        userId: currentUser._id,
-      }).lean();
+    const updatedAppUserProfile = await AppUserProfile.findOne({
+      userId: currentUser._id,
+    })
+      .populate("createdOrganizations")
+      .populate("createdEvents")
+      .populate("eventAdmin")
+      .populate("adminFor");
 
     // Returns updated currentUser.
     return {
       user: updatedUser,
-      appUserProfile: {
-        _id: updatedAppUserProfile._id.toString(),
-        userId: updatedAppUserProfile.userId as InterfaceUser,
-        adminFor: updatedAppUserProfile.adminFor as InterfaceOrganization[],
-        appLanguageCode: updatedAppUserProfile.appLanguageCode,
-        isSuperAdmin: updatedAppUserProfile.isSuperAdmin,
-        pluginCreationAllowed: updatedAppUserProfile.pluginCreationAllowed,
-        tokenVersion: updatedAppUserProfile.tokenVersion,
-        eventAdmin: updatedAppUserProfile.eventAdmin as InterfaceEvent[],
-        createdEvents: updatedAppUserProfile.createdEvents as InterfaceEvent[],
-        createdOrganizations:
-          updatedAppUserProfile.createdOrganizations as InterfaceOrganization[],
-      },
+      appUserProfile: updatedAppUserProfile as InterfaceAppUserProfile,
     };
   };

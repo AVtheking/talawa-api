@@ -1,11 +1,6 @@
 import { USER_NOT_FOUND_ERROR } from "../../constants";
 import { errors } from "../../libraries";
-import type {
-  InterfaceAppUserProfile,
-  InterfaceEvent,
-  InterfaceOrganization,
-  InterfaceUser,
-} from "../../models";
+import type { InterfaceAppUserProfile, InterfaceUser } from "../../models";
 import { AppUserProfile, User } from "../../models";
 import type { QueryResolvers } from "../../types/generatedGraphQLTypes";
 /**
@@ -31,7 +26,7 @@ export const user: QueryResolvers["user"] = async (_parent, args, context) => {
   const user: InterfaceUser = await User.findOne({
     _id: args.id,
   }).lean();
-  const userAppProfile: InterfaceAppUserProfile = await AppUserProfile.findOne({
+  const userAppProfile = await AppUserProfile.findOne({
     userId: user._id,
   })
     .populate("createdOrganizations")
@@ -47,19 +42,6 @@ export const user: QueryResolvers["user"] = async (_parent, args, context) => {
       image: user?.image ? `${context.apiRootUrl}${user.image}` : null,
       organizationsBlockedBy: [],
     },
-    appUserProfile: {
-      // ...userAppProfile,
-      _id: userAppProfile._id.toString(),
-      userId: userAppProfile.userId as InterfaceUser,
-      adminFor: userAppProfile.adminFor as InterfaceOrganization[],
-      appLanguageCode: userAppProfile.appLanguageCode,
-      isSuperAdmin: userAppProfile.isSuperAdmin,
-      pluginCreationAllowed: userAppProfile.pluginCreationAllowed,
-      tokenVersion: userAppProfile.tokenVersion,
-      eventAdmin: userAppProfile.eventAdmin as InterfaceEvent[],
-      createdEvents: userAppProfile.createdEvents as InterfaceEvent[],
-      createdOrganizations:
-        userAppProfile.createdOrganizations as InterfaceOrganization[],
-    },
+    appUserProfile: userAppProfile as InterfaceAppUserProfile,
   };
 };
