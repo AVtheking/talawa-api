@@ -15,6 +15,7 @@ import {
 
 import { GraphQLError } from "graphql";
 import { MAXIMUM_FETCH_LIMIT } from "../../constants";
+import { logger } from "../../libraries";
 
 /**
  * Resolver function to fetch and return posts created by a user from the database.
@@ -79,6 +80,7 @@ export const posts: OrganizationResolvers["posts"] = async (
       .countDocuments()
       .exec(),
   ]);
+  logger.info(totalCount);
   const posts = objectList.map((post) => ({
     ...post,
     imageUrl: post.imageUrl ? `${context.apiRootUrl}${post.imageUrl}` : null,

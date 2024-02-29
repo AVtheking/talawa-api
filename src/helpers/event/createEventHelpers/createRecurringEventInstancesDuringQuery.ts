@@ -50,7 +50,7 @@ export const createRecurringEventInstancesDuringQuery = async (
       const baseRecurringEvent = await Event.find({
         _id: recurrenceRule.baseRecurringEventId,
       }).lean();
-
+      if (!baseRecurringEvent.length) return;
       // get the data from the baseRecurringEvent
       const {
         _id: baseRecurringEventId,
