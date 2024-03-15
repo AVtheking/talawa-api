@@ -2,10 +2,10 @@ import type { QueryResolvers } from "../../types/generatedGraphQLTypes";
 import { isSampleOrganization } from "../Query/organizationIsSample";
 import { actionItem } from "./actionItem";
 import { actionItemCategoriesByOrganization } from "./actionItemCategoriesByOrganization";
-import { advertisementsConnection } from "./advertisementsConnection";
 import { actionItemCategory } from "./actionItemCategory";
 import { actionItemsByEvent } from "./actionItemsByEvent";
 import { actionItemsByOrganization } from "./actionItemsByOrganization";
+import { advertisementsConnection } from "./advertisementsConnection";
 import { agendaCategory } from "./agendaCategory";
 import { checkAuth } from "./checkAuth";
 import { customDataByOrganization } from "./customDataByOrganization";
@@ -19,7 +19,10 @@ import { getDonationById } from "./getDonationById";
 import { getDonationByOrgId } from "./getDonationByOrgId";
 import { getDonationByOrgIdConnection } from "./getDonationByOrgIdConnection";
 import { getFundById } from "./getFundById";
+import { getFundraisingCampaignById } from "./getFundraisingCampaign";
+import { getFundraisingCampaignPledgeById } from "./getFundraisingCampaignPledgeById";
 import { getPlugins } from "./getPlugins";
+import { getUserFamily } from "./getUserFamiliy";
 import { getlanguage } from "./getlanguage";
 import { me } from "./me";
 import { myLanguage } from "./myLanguage";
@@ -67,4 +70,7 @@ export const Query: QueryResolvers = {
   users,
   usersConnection,
   getFundById,
+  getFundraisingCampaignById,
+  getFundraisingCampaignPledgeById,
+  getUserFamily
 };

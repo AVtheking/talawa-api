@@ -105,7 +105,11 @@ import { updateUserRoleInOrganization } from "./updateUserRoleInOrganization";
 import { updateUserTag } from "./updateUserTag";
 import { updateUserType } from "./updateUserType";
 import { deleteAdvertisement } from "./deleteAdvertisement";
-
+import { updateFundraisingCampaign } from "./updateFundraisingCampaign";
+import { updateFundraisingCampaignPledge } from "./updateFundCampaignPledge";
+import { createFundraisingCampaignPledge } from "./createFundraisingCampaignPledge";
+import { removeFundraisingCampaign } from "./removeFundraisingCampaign";
+import { removeFundraisingCampaignPledge } from "./removeFundraisingCampaingPledge"
 export const Mutation: MutationResolvers = {
   acceptAdmin,
   acceptMembershipRequest,
@@ -213,4 +217,9 @@ export const Mutation: MutationResolvers = {
   updateUserTag,
   updatePost,
   updateAdvertisement,
+  createFundraisingCampaignPledge,
+  updateFundraisingCampaign,
+  updateFundraisingCampaignPledge,
+  removeFundraisingCampaign,
+  removeFundraisingCampaignPledge
 };

@@ -5,7 +5,7 @@ import {
   USER_NOT_AUTHORIZED_ERROR,
   USER_NOT_FOUND_ERROR,
 } from "../../constants";
-import { errors, requestContext } from "../../libraries";
+import { errors, logger, requestContext } from "../../libraries";
 import {
   Fund,
   FundraisingCampaign,
@@ -35,6 +35,7 @@ export const updateFundraisingCampaign: MutationResolvers["updateFundraisingCamp
     const currentUser = await User.findOne({
       _id: context.userId,
     });
+    logger.info(`---------------------------------------------`)
 
     //Checks if the current user exists
     if (!currentUser) {
@@ -119,6 +120,6 @@ export const updateFundraisingCampaign: MutationResolvers["updateFundraisingCamp
         new: true,
       },
     ).lean();
-
+    logger.info(updatedCampaign)
     return updatedCampaign as InterfaceFundraisingCampaign;
   };

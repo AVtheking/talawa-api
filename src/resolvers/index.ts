@@ -38,6 +38,7 @@ import { UserTag } from "./UserTag";
 
 import { Advertisement } from "./Advertisement";
 
+import { FundraisingCampaignPledge } from "./FundraisingCampaignPledge";
 import { currentUserExists } from "./middleware/currentUserExists";
 
 const resolvers: Resolvers = {
@@ -53,6 +54,7 @@ const resolvers: Resolvers = {
   Feedback,
   Fund,
   FundraisingCampaign,
+  FundraisingCampaignPledge,
   GroupChat,
   UserFamily,
   GroupChatMessage,

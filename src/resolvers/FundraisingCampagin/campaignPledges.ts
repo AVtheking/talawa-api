@@ -1,3 +1,4 @@
+import { logger } from "../../libraries";
 import { FundraisingCampaignPledge } from "../../models/FundraisingCampaignPledge";
 import type { FundraisingCampaignResolvers } from "../../types/generatedGraphQLTypes";
 
@@ -9,7 +10,9 @@ import type { FundraisingCampaignResolvers } from "../../types/generatedGraphQLT
 export const pledges: FundraisingCampaignResolvers["pledges"] = async (
   parent,
 ) => {
-  return await FundraisingCampaignPledge.find({
-    campaignId: parent._id,
+  const pledges = await FundraisingCampaignPledge.find({
+    campaigns: parent._id,
   }).lean();
+  logger.info(JSON.stringify(pledges));
+  return pledges;
 };
